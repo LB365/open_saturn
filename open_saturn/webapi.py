@@ -16,18 +16,8 @@ from data_hub.tsio import timeseries as tshclass
 
 
 def make_app(config):
-    dburi = config['db']['uri']
-    engine = create_engine(dburi)
     tsa = apimaker(config)
     app = refinery_app(config, tsa, additionnal_info)
-
-    app.register_blueprint(
-        mercure(
-            engine,
-            tshclass,
-            remove_mercure_mapping
-        )
-    )
 
     bp = Blueprint(
         'open_saturn',
