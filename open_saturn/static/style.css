@@ -1,0 +1,36 @@
+.summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+span.tznaive {
+    color: darkred;
+}
+
+span.tzaware {
+    color: darkgreen;
+}
+
+
+.gridlike {
+    display: grid;
+    grid-template-columns: 15em 15em 15em 15em;
+}
+
+.gridlike button {
+    margin: 2px;
+}
+
+section:hover {
+    background: lightgrey;
+    border-radius: 3px;
+}
+
+/* don't work here > must modify style.css in tshistory_refinery/static */
+.msg_info {
+    background-color: lightskyblue;
+}
+
+.message {
+    color:red;
+}

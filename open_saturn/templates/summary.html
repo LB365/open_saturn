@@ -1,0 +1,44 @@
+{% extends "dh_base.html" %}
+
+{% block body %}
+
+
+
+<h1>SATURN API and Control Room</h1>
+
+<div class="summary">
+    <section>
+        <h2>Time series</h2>
+        <ul>
+            <li><a href="./tssearch">Series Catalog</a></li>
+            <li><a href="./tsview">Series Quick-View</a></li>
+            <li><a href="./tsviewlog">Import Log</a></li>
+            {% if has_write_permission %}
+            <li><a href="./tsrename">Rename Series</a></li>
+            <li><a href="./tsdelete">Delete Series</a></li>
+            {% endif %}
+        </ul>
+    </section>
+
+    <section>
+        <h2>Formula</h2>
+        <ul>
+            <li><a href="./formulas">All Formulas</a></li>
+            {% if has_write_permission %}
+            <li><a href="./addformulas">Upload New Formulas</a></li>
+            <li><a href="./tsformula">Edit a new Formula</a></li>
+            {% endif %}
+            <li><a href="./tsformula/operators">Formula operators documentation</a></li>
+        </ul>
+    </section>
+
+    {% if has_write_permission %}
+    <section>
+        <h2>Tasks</h2>
+        <div><a href="./tasks">Monitoring</a></div>
+    </section>
+    {% endif %}
+
+</div>
+
+{% endblock %}
