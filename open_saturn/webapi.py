@@ -8,16 +8,16 @@ from flask import (
 from sqlalchemy import create_engine
 from rework import api
 from pml import HTML
-
 from tshistory_refinery.webapi import make_app as refinery_app
 
-from data_hub.helper import apimaker
-from data_hub.tsio import timeseries as tshclass
+from tshistory_refinery import helper
+from tshistory_refinery.webapi import make_app
 
 
-def make_app(config):
-    tsa = apimaker(config)
-    app = refinery_app(config, tsa, additionnal_info)
+
+def make_open_app(config):
+    tsa = helper.apimaker(config)
+    app = refinery_app(config, tsa)
 
     bp = Blueprint(
         'open_saturn',
