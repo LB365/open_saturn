@@ -5,10 +5,10 @@ from tshistory.api import timeseries
 
 
 NTHREAD = 16
-def config(heroku_url=None):
-    if heroku_url is not None:
+def config():
+    if 'DATABASE_URL' in os.environ.keys() is not None:
         config = reader('refinery-heroku.ini')
-        config['db']['uri'] = heroku_url
+        config['db']['uri'] = os.environ['DATABASE_URL']
         return config
     else:
         return reader('refinery.ini')
