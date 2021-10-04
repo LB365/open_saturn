@@ -2,18 +2,15 @@ import socket
 from inireader import reader
 from tshistory_refinery.helper import readsources
 from tshistory.api import timeseries
-
-NTHREAD = 16
+import os
 
 
 def config():
+    config = reader('refinery.ini')
     if 'DATABASE_URL' in os.environ.keys() is not None:
-        config = reader('refinery-heroku.ini')
-        config['db']['uri'] = os.environ['DATABASE_URL'].replace('postgres',
-                                                                 'postgresql')
-        return config
-    else:
-        return reader('refinery.ini')
+        url_env = os.environ['DATABASE_URL'].replace('postgres', 'postgresql')
+        config['db']['uri'] = url_env
+    return config
 
 
 def host():

@@ -9,7 +9,10 @@ setup(
     name='open_saturn',
     version='1.0',
     packages=['pm_utils', 'open_saturn'],
-    package_dir={'pm_utils': 'pm_utils', 'open_saturn': 'open_saturn'},
+    package_dir={
+        'pm_utils': 'pm_utils',
+        'open_saturn': 'open_saturn'
+    },
     package_data={'open_saturn': [
         'templates/*'
     ]},
@@ -19,6 +22,8 @@ setup(
         'mock',
         'inireader',
         'apscheduler',
+        'xlwings',
+        'tshistory_xl @ https://hg.sr.ht/~pythonian/tshistory_xl/archive/0.2.1.tar.gz#egg=tshistory_xl',
         'tshistory_editor @ https://hg.sr.ht/~pythonian/tshistory_editor/archive/0.8.2.tar.gz#egg=tshistory_editor',
         'tshistory_rest @ https://hg.sr.ht/~pythonian/tshistory_rest/archive/0.10.0.tar.gz#egg=tshistory_rest',
         'tshistory_refinery @ https://hg.sr.ht/~pythonian/tshistory_refinery/archive/0.2.0.tar.gz#egg=tshistory_refinery',

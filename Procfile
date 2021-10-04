@@ -1,1 +1,1 @@
-web: gunicorn open_saturn.wsgi:heroku_app
+web: gunicorn open_saturn.wsgi:app
