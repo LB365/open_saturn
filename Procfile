@@ -1,4 +1,3 @@
-worker: export INSTALL_ON_LINUX=1
 worker: tsh init-db DATABASE_URL
 worker: tsh formula-init-db DATABASE_URL
 worker: rework init-db DATABASE_URL
