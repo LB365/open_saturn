@@ -14,8 +14,8 @@ setup(
         'templates/*'
     ]},
     install_requires=[
-        'Flask',
-        'pandas >= 1.0',
+        'Flask<2.0',
+        'pandas <= 1.2',
         'mock',
         'inireader',
         'apscheduler',
