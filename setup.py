@@ -12,6 +12,7 @@ setup(
         'tzlocal~=2.0',
         'werkzeug',
         'mock',
+        'inireader',
         'apscheduler',
     ],
     entry_points={
