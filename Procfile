@@ -1,4 +1,4 @@
-worker: pip install -e.
+worker: export INSTALL_ON_LINUX=1;pip install -e.
 worker: tsh init-db DATABASE_URL
 worker: tsh formula-init-db DATABASE_URL
 worker: rework init-db DATABASE_URL
