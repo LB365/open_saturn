@@ -9,7 +9,7 @@ setup(
         'gunicorn',
         'psycopg2',
         'flask<2.0',
-        'tshistory_refinery @ https://hg.sr.ht/~pythonian/tshistory_refinery/archive/0.2.0.tar.gz`',
+        'tshistory_refinery @ https://hg.sr.ht/~pythonian/tshistory_refinery/archive/0.2.0.tar.gz#egg=tshistory_refinery',
         'tzlocal~=2.0',
         'werkzeug',
         'mock',
