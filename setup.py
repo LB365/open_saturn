@@ -19,7 +19,6 @@ setup(
         'werkzeug',
         'mock',
         'inireader',
-        'xlwings',
         'apscheduler',
     ],
     entry_points={
