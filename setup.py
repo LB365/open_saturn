@@ -3,7 +3,7 @@ import os
 import platform
 
 if platform.system() == 'Linux':
-    os.environ["INSTALL_ON_LINUX"] = 1
+    os.environ["INSTALL_ON_LINUX"] = "1"
 
 setup(
     name='open_saturn',
