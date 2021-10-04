@@ -19,7 +19,6 @@ setup(
         'werkzeug',
         'mock',
         'inireader',
-        'tshistory_xl',
         'xlwings',
         'apscheduler',
     ],
