@@ -15,7 +15,7 @@ setup(
     ]},
     install_requires=[
         'Flask<2.0',
-        'pandas <= 1.2',
+        'pandas<1.2',
         'mock',
         'inireader',
         'apscheduler',
@@ -29,5 +29,5 @@ setup(
 
         ],
     },
-    extras_require={'heroku': ["gunicorn", "psycopg2"]},
+    extras_require={'heroku': ["gunicorn", "psycopg2-binary"]},
 )
