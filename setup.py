@@ -10,7 +10,7 @@ versions = {
 
 
 def hgsr_repo(repo_name, version):
-    return f'{repo_name} @ https://hg.sr.ht/~pythonian' / \
+    return f'{repo_name} @ https://hg.sr.ht/~pythonian/' \
            f'{repo_name}/archive/{version}.tar.gz#egg={repo_name}'
 
 

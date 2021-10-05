@@ -1,8 +1,0 @@
-[webservers]
-ec2-user@ec2-3-15-233-4.us-east-2.compute.amazonaws.com
-
-[webservers:vars]
-ansible_ssh_user=xxx
-github_user=xxx
-app_name=open_saturn
-ansible_ssh_private_key_file = ./key-open-saturn.pem
