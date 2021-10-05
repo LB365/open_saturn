@@ -20,11 +20,14 @@ _REQUIREMENTS = [
     'mock',
     'inireader',
     'apscheduler',
+    'xlwings',
+    'gunicorn',
+    'psycopg2-binary'
 ]
 
 SATURN_REQUIREMENTS = [hgsr_repo(k, v) for k, v in versions.items()]
 
-REQUIREMENTS = _REQUIREMENTS + SATURN_REQUIREMENTS[:-1]
+REQUIREMENTS = _REQUIREMENTS + SATURN_REQUIREMENTS
 
 setup(
     name='open_saturn',
@@ -44,13 +47,4 @@ setup(
 
         ],
     },
-    extras_require={
-        'remote': [
-            'gunicorn',
-            'psycopg2-binary'
-        ],
-        'xl': [
-            'xlwings',
-            SATURN_REQUIREMENTS[-1],
-        ]},
 )
