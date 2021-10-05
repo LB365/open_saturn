@@ -20,7 +20,6 @@ _REQUIREMENTS = [
     'mock',
     'inireader',
     'apscheduler',
-    'xlwings',
     'gunicorn',
     'psycopg2-binary'
 ]
