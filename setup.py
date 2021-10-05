@@ -1,9 +1,29 @@
 from setuptools import setup
-import os
-import platform
 
-if platform.system() == 'Linux':
-    os.environ["INSTALL_ON_LINUX"] = "1"
+versions = {
+    'tshistory': '0.13.0',
+    'tshistory_editor': '0.8.2',
+    'tshistory_rest': '0.10.0',
+    'tshistory_refinery': '0.2.0',
+    'tshistory_xl': '0.2.1',
+}
+
+
+def hgsr_repo(repo_name, version):
+    return f'{repo_name} @ https://hg.sr.ht/~pythonian' / \
+           f'{repo_name}/archive/{version}.tar.gz#egg={repo_name}'
+
+
+_REQUIREMENTS = [
+    'pandas<1.2',
+    'mock',
+    'inireader',
+    'apscheduler',
+]
+
+SATURN_REQUIREMENTS = [hgsr_repo(k, v) for k, v in versions.items()]
+
+REQUIREMENTS = _REQUIREMENTS + SATURN_REQUIREMENTS[:-1]
 
 setup(
     name='open_saturn',
@@ -16,23 +36,20 @@ setup(
     package_data={'open_saturn': [
         'templates/*'
     ]},
-    install_requires=[
-        'Flask<2.0',
-        'pandas<1.2',
-        'mock',
-        'inireader',
-        'apscheduler',
-        'xlwings',
-        'tshistory_xl @ https://hg.sr.ht/~pythonian/tshistory_xl/archive/0.2.1.tar.gz#egg=tshistory_xl',
-        'tshistory_editor @ https://hg.sr.ht/~pythonian/tshistory_editor/archive/0.8.2.tar.gz#egg=tshistory_editor',
-        'tshistory_rest @ https://hg.sr.ht/~pythonian/tshistory_rest/archive/0.10.0.tar.gz#egg=tshistory_rest',
-        'tshistory_refinery @ https://hg.sr.ht/~pythonian/tshistory_refinery/archive/0.2.0.tar.gz#egg=tshistory_refinery',
-    ],
+    install_requires=REQUIREMENTS,
     entry_points={
         'tshistory.subcommands': [
             'openwebstart=open_saturn.cli:openwebstart',
 
         ],
     },
-    extras_require={'heroku': ["gunicorn", "psycopg2-binary"]},
+    extras_require={
+        'remote': [
+            'gunicorn',
+            'psycopg2-binary'
+        ],
+        'xl': [
+            'xlwings',
+            SATURN_REQUIREMENTS[-1],
+        ]},
 )
