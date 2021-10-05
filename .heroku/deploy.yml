@@ -1,0 +1,17 @@
+---
+- name: Heroku login
+  expect:
+    command: heroku login
+    responses:
+      (?i)Email: "{{ heroku_email }}"
+      (?i)Password: "{{ heroku_password }}"
+  tags:
+    - heroku_setup
+
+- name: Check if heroku app exists
+  command: bash -c "heroku apps | grep {{ app_name }}"
+  register: app_exists
+  ignore_errors: True
+  tags:
+    - heroku_setup
+    - find_app
