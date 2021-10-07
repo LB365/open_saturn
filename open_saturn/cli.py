@@ -13,7 +13,7 @@ def openwebstart():
 
 @click.command('register-tasks')
 @click.option('--cleanup', is_flag=True, default=False)
-def register_tasks():
+def register_tasks(cleanup):
     dburi = config()['db']['uri']
     engine = create_engine(dburi)
 
