@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+import os
 
 
 def replace_uri(refinery_file):
