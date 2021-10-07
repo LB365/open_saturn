@@ -1,5 +1,5 @@
 PROPER="${DATABASE_URL//postgres/postgresql}"
-sed -i "s/DATABASE_URL/$PROPER/g" refinery.ini
+perl -pi -e "s/DATABASE_URL/$PROPER/g" refinery.ini
 echo "heroku uri: $DATABASE_URL; proper heroku uri: $PROPER"
 tsh init-db
 tsh formula-init-db $PROPER
