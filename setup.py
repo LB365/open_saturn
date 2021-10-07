@@ -43,6 +43,7 @@ setup(
     entry_points={
         'tshistory.subcommands': [
             'openwebstart=open_saturn.cli:openwebstart',
+            'register-tasks=open_saturn.cli:register_tasks'
 
         ],
     },

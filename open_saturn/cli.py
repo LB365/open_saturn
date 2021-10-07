@@ -11,7 +11,7 @@ def openwebstart():
     from open_saturn.wsgi import app
     app.run(debug=True)
 
-@saturnoil.command('register-tasks')
+@click.command('register-tasks')
 @click.option('--cleanup', is_flag=True, default=False)
 def register_tasks():
     dburi = config()['db']['uri']
