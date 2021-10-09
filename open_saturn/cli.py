@@ -6,6 +6,10 @@ from sqlalchemy import create_engine
 
 from open_saturn.helper import host, config
 
+@click.group()
+def saturn():
+    pass
+
 
 @click.command()
 def openwebstart():
@@ -13,7 +17,7 @@ def openwebstart():
     app.run(debug=True)
 
 
-@click.command('register-tasks')
+@saturn.command('register-tasks')
 @click.option('--cleanup', is_flag=True, default=False)
 def register_tasks(cleanup):
     dburi = config()['db']['uri']
@@ -27,7 +31,7 @@ def register_tasks(cleanup):
 
     api.freeze_operations(engine)
 
-@click.command('schedule-tasks')
+@saturn.command('schedule-tasks')
 def schedule_tasks():
     dburi = config()['db']['uri']
     engine = create_engine(dburi)

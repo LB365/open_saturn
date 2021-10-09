@@ -42,7 +42,7 @@ setup(
     install_requires=REQUIREMENTS,
     entry_points={
         'console_scripts': [
-            'saturn=open_saturn.cli',
+            'saturn=open_saturn.cli:saturn',
         ],
     },
 )
