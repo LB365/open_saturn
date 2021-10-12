@@ -20,7 +20,7 @@ def openwebstart():
     app.run(debug=True)
 
 
-@dh.command('vacuum')
+@saturn.command('vacuum')
 @click.option('--domain', default='default')
 @click.option('--days', type=int, default=7)
 def vacuum_now(domain='default', days=7):
