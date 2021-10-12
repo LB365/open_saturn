@@ -1,11 +1,12 @@
 import click
-
 from time import sleep
+from sqlalchemy import create_engine
+from apscheduler.schedulers.blocking import BlockingScheduler
+
 from rework import api
 from rework.cli import monitor
-from sqlalchemy import create_engine
 
-from open_saturn.helper import host, config
+from open_saturn.helper import host, config, vacuum
 
 
 @click.group()
@@ -17,6 +18,35 @@ def saturn():
 def openwebstart():
     from open_saturn.wsgi import app
     app.run(debug=True)
+
+
+@dh.command('vacuum')
+@click.option('--domain', default='default')
+@click.option('--days', type=int, default=7)
+def vacuum_now(domain='default', days=7):
+    """cleanup the tasks list (for a given domain) of its finished
+    tasks (with a default 7 days horizon)
+    """
+    cfg = config()
+    dburi = cfg['db']['uri']
+    deleted = vacuum(dburi, domain, horizon=timedelta(days=days))
+    print(
+        f'deleted {deleted} tasks '
+        f'(finished before {datetime.utcnow() - timedelta(days=days)})'
+    )
+
+
+@saturn.command('start-scheduler')
+def start_scheduler():
+    cfg = config()
+    dburi = cfg['db']['uri']
+    scheduler = BlockingScheduler()
+    scheduler.add_job(
+        lambda: vacuum(dburi, 'default'),
+        trigger='cron',
+        hour='*'
+    )
+    scheduler.start()
 
 
 @saturn.command('register-tasks')

@@ -1,1 +1,1 @@
-tsh register-tasks
+saturn register-tasks
