@@ -2,9 +2,11 @@ import click
 
 from time import sleep
 from rework import api
+from rework.cli import monitor
 from sqlalchemy import create_engine
 
 from open_saturn.helper import host, config
+
 
 @click.group()
 def saturn():
@@ -30,6 +32,7 @@ def register_tasks(cleanup):
                 "delete from rework.operation where path like '%%open_saturn%%'")
 
     api.freeze_operations(engine)
+
 
 @saturn.command('schedule-tasks')
 def schedule_tasks():
