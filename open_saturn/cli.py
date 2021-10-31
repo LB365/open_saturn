@@ -18,9 +18,9 @@ def saturn():
 
 @saturn.command('template-okta-file')
 def generate_okta_secret():
-    OKTA_CLIENT_ID = os.environ['OKTA_CLIENT_ID']
-    OKTA_CLIENT_SECRET = os.environ['OKTA_CLIENT_SECRET']
-    OKTA_ORG_URL = os.environ['OKTA_ORG_URL']
+    OKTA_CLIENT_ID = os.environ['OKTA_OAUTH2_CLIENT_ID_WEB']
+    OKTA_CLIENT_SECRET = os.environ['OKTA_OAUTH2_CLIENT_SECRET_WEB']
+    OKTA_ORG_URL = os.environ['OKTA_CLIENT_ORGURL']
     HOMEPAGE = os.environ['HOMEPAGE']
     secrets = {
         "web": {

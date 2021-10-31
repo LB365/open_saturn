@@ -25,6 +25,7 @@ You will need dev-environment variables and additionally:
 OKTA_CLIENT_ID = <okta-client-id>
 OKTA_CLIENT_SECRET = <okta-client-secret>
 OKTA_ORG_URL = <okta-org-url>
+RANDOM_SECRET_KEY=<a-random-key>
 HOMEPAGE = <my-app.com>
 ```
 
