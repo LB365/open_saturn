@@ -1,17 +1,13 @@
-import io
+import os
 
 from flask import (
     Blueprint,
     render_template,
+    g
 )
-
-from sqlalchemy import create_engine
-from rework import api
-from pml import HTML
+    
 from tshistory_refinery.webapi import make_app as refinery_app
-
 from tshistory_refinery import helper
-from tshistory_refinery.webapi import make_app
 
 
 def make_open_app(config):
@@ -35,3 +31,24 @@ def make_open_app(config):
 
     app.register_blueprint(bp)
     return app
+
+def make_okta_app(config):
+    app = make_open_app(config)
+    org = os.environ['RANDOM_SECRET_KEY']
+    token = os.environ['OKTA_CLIENT_TOKEN']
+    app.config["OIDC_CLIENT_SECRETS"] = "client_secrets.json"
+    app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
+    app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
+    app.config["SECRET_KEY"] = f"{os.environ['RANDOM_SECRET_KEY']}"
+    from flask_oidc import OpenIDConnect
+    oidc = OpenIDConnect(app)
+    from okta import UsersClient
+    okta_client = UsersClient(org, token)
+
+    @app.before_request
+    def before_request():
+        if oidc.user_loggedin:
+            g.user = okta_client.get_user(oidc.user_getfield("sub"))
+        else:
+            g.user = None
+

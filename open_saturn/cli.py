@@ -1,5 +1,6 @@
 import click
 import os
+import json
 from configparser import ConfigParser
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine
@@ -13,6 +14,32 @@ from open_saturn.helper import config, vacuum
 @click.group()
 def saturn():
     pass
+
+
+@saturn.command('template-okta-file')
+def generate_okta_secret():
+    OKTA_CLIENT_ID = os.environ['OKTA_CLIENT_ID']
+    OKTA_CLIENT_SECRET = os.environ['OKTA_CLIENT_SECRET']
+    OKTA_ORG_URL = os.environ['OKTA_ORG_URL']
+    HOMEPAGE = os.environ['HOMEPAGE']
+    secrets = {
+        "web": {
+            "client_id": f"{OKTA_CLIENT_ID} ",
+            "client_secret": f"{OKTA_CLIENT_SECRET}",
+            "auth_uri": f"{OKTA_ORG_URL}/oauth2/default/v1/authorize",
+            "token_uri": f"{OKTA_ORG_URL}/oauth2/default/v1/token",
+            "issuer": f"{OKTA_ORG_URL}/oauth2/default",
+            "userinfo_uri": f"{OKTA_ORG_URL}/oauth2/default/userinfo",
+            "redirect_uris": [
+                f"https://{HOMEPAGE}/oidc/callback"
+            ]
+        }
+    }
+    with open('client_secrets.json', 'w') as f:
+        json.dump(secrets, f)
+
+
+
 
 @saturn.command('template-config-file')
 @click.option('--path', default='refinery.ini')
@@ -81,6 +108,7 @@ def register_tasks(cleanup):
         engine,
         'schedule-tasks'
     )
+
 
 @saturn.command('schedule-tasks')
 def schedule_tasks():

@@ -16,6 +16,8 @@ def hgsr_repo(repo_name, version):
 
 _REQUIREMENTS = [
     'flask<2.0',
+    'flask_oidc',
+    'okta',
     'pandas<1.2',
     'mock',
     'inireader',
