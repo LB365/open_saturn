@@ -14,7 +14,6 @@ from tshistory_refinery import helper
 from tshistory_refinery.webapi import make_app
 
 
-
 def make_open_app(config):
     tsa = helper.apimaker(config)
     app = refinery_app(config, tsa)

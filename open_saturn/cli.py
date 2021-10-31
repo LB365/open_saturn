@@ -1,17 +1,32 @@
 import click
-from time import sleep
+import os
+from configparser import ConfigParser
+from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from rework import api
-from rework.cli import monitor
 
-from open_saturn.helper import host, config, vacuum
+from open_saturn.helper import config, vacuum
 
 
 @click.group()
 def saturn():
     pass
+
+@saturn.command('template-config-file')
+@click.option('--path', default='refinery.ini')
+def replace_uri(path):
+    config = ConfigParser()
+    config.read(path)
+    if 'DATABASE_URL' in os.environ.keys() is not None:
+        prefix = 'postgres'
+        url = os.environ['DATABASE_URL'].replace(prefix, prefix + 'ql')
+        os.environ['REWORKCFGPATH'] = url
+        if not config.get('db', 'uri').startswith('postgresql'):
+            config.set('db', 'uri', url)
+    with open(path, 'w') as configfile:
+        config.write(configfile)
 
 
 @click.command()
@@ -62,7 +77,10 @@ def register_tasks(cleanup):
                 "delete from rework.operation where path like '%%open_saturn%%'")
 
     api.freeze_operations(engine)
-
+    api.schedule(
+        engine,
+        'schedule-tasks'
+    )
 
 @saturn.command('schedule-tasks')
 def schedule_tasks():
