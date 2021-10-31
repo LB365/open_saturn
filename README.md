@@ -22,9 +22,9 @@ DATABASE_URL=uri (Database URI address)
 You will need dev-environment variables and additionally:
 
 ```
-OKTA_CLIENT_ID = <okta-client-id>
-OKTA_CLIENT_SECRET = <okta-client-secret>
-OKTA_ORG_URL = <okta-org-url>
+OKTA_OAUTH2_CLIENT_ID_WEB = <okta-client-id>
+OKTA_OAUTH2_CLIENT_SECRET_WEB = <okta-client-secret>
+OKTA_CLIENT_ORGURL = <okta-org-url>
 RANDOM_SECRET_KEY=<a-random-key>
 HOMEPAGE = <my-app.com>
 ```
