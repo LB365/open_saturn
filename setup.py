@@ -23,7 +23,7 @@ _REQUIREMENTS = [
     'inireader',
     'apscheduler',
     'gunicorn',
-    'psycopg2-binary'
+    'psycopg2-binary',
 ]
 
 SATURN_REQUIREMENTS = [hgsr_repo(k, v) for k, v in versions.items()]

@@ -34,7 +34,7 @@ def make_open_app(config):
 
 def make_okta_app(config):
     app = make_open_app(config)
-    org = os.environ['RANDOM_SECRET_KEY']
+    org = os.environ['OKTA_CLIENT_ORGURL']
     token = os.environ['OKTA_CLIENT_TOKEN']
     app.config["OIDC_CLIENT_SECRETS"] = "client_secrets.json"
     app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"

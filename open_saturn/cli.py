@@ -104,10 +104,6 @@ def register_tasks(cleanup):
                 "delete from rework.operation where path like '%%open_saturn%%'")
 
     api.freeze_operations(engine)
-    api.schedule(
-        engine,
-        'schedule-tasks'
-    )
 
 
 @saturn.command('schedule-tasks')
