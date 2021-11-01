@@ -1,4 +1,5 @@
 import click
+import logging
 import os
 import json
 from configparser import ConfigParser
@@ -35,8 +36,10 @@ def generate_okta_secret():
             ]
         }
     }
-    with open('client_secrets.json', 'w') as f:
-        json.dump(secrets, f)
+    logging.warning(f'Secrets: {secrets}')
+    with open('client_secrets.json', 'w') as jsonfile:
+        json.dump(secrets, jsonfile)
+    logging.warning(f'Output file: {json.load(open("client_secrets.json", "r"))}')
 
 
 
@@ -50,10 +53,12 @@ def replace_uri(path):
         prefix = 'postgres'
         url = os.environ['DATABASE_URL'].replace(prefix, prefix + 'ql')
         os.environ['REWORKCFGPATH'] = url
+        logging.warning(msg=f'The database URL is {url}')
         if not config.get('db', 'uri').startswith('postgresql'):
             config.set('db', 'uri', url)
     with open(path, 'w') as configfile:
         config.write(configfile)
+    logging.warning(msg=f'Output file: {config.read(path).__str__()}')
 
 
 @click.command()
