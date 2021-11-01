@@ -56,9 +56,9 @@ def replace_uri(path):
         logging.warning(msg=f'The database URL is {url}')
         if not config.get('db', 'uri').startswith('postgresql'):
             config.set('db', 'uri', url)
+            logging.warning(config.get('db', 'uri'))
     with open(path, 'w') as configfile:
         config.write(configfile)
-    logging.warning(msg=f'Output file: {config.read(path).__str__()}')
 
 
 @click.command()
