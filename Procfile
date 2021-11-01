@@ -1,4 +1,4 @@
-release: bash script/release.sh
-worker: bash script/worker.sh
+release: bash scripts/release.sh
+worker: bash scripts/worker.sh
 scheduler: saturn start-scheduler
 web: gunicorn open_saturn.wsgi:app
