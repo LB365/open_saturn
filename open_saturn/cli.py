@@ -1,7 +1,6 @@
 import click
 import logging
 import os
-import json
 from configparser import ConfigParser
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine
@@ -34,7 +33,7 @@ def replace_uri(path):
         config.write(configfile)
 
 
-@click.command()
+@saturn.command()
 def openwebstart():
     from open_saturn.wsgi import app
     app.run(debug=True)
