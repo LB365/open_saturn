@@ -54,8 +54,9 @@ def make_okta_app(config):
     app.config["SECRET_KEY"] = f"{os.environ['RANDOM_SECRET_KEY']}"
     from flask_oidc import OpenIDConnect
     oidc = OpenIDConnect(app)
-    from okta import UsersClient
-    okta_client = UsersClient(org, token)
+    from okta.client import Client as OktaClient
+    config = {'orgUrl': org, 'token': token}
+    okta_client = OktaClient(config)
 
     @app.before_request
     def before_request():
