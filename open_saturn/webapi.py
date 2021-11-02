@@ -5,9 +5,11 @@ from flask import (
     render_template,
     g
 )
-    
+
 from tshistory_refinery.webapi import make_app as refinery_app
 from tshistory_refinery import helper
+
+from open_saturn.helper import generate_okta_secret
 
 
 def make_open_app(config):
@@ -32,11 +34,12 @@ def make_open_app(config):
     app.register_blueprint(bp)
     return app
 
+
 def make_okta_app(config):
     app = make_open_app(config)
     org = os.environ['OKTA_CLIENT_ORGURL']
     token = os.environ['OKTA_CLIENT_TOKEN']
-    app.config["OIDC_CLIENT_SECRETS"] = "client_secrets.json"
+    app.config["OIDC_CLIENT_SECRETS"] = generate_okta_secret()
     app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
     app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
     app.config["SECRET_KEY"] = f"{os.environ['RANDOM_SECRET_KEY']}"
@@ -51,4 +54,3 @@ def make_okta_app(config):
             g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
             g.user = None
-
