@@ -1,3 +1,2 @@
-saturn register-tasks
-saturn template-config-file
-saturn template-okta-file
+saturn register-tasks --cleanup
+saturn schedule-tasks
