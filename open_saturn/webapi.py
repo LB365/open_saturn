@@ -74,7 +74,7 @@ def make_okta_app(config):
         return redirect(url_for("/"))
 
 
-    @app.before_request(_before_request)
+    app.before_request(_before_request)
 
     
     return app
