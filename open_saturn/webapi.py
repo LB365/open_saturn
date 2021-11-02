@@ -41,7 +41,7 @@ def _generate_client_secrets(path):
         json.dump(secrets, f)
 
 def _load_client_secrets(path):
-    with open(path, 'w') as f:
+    with open(path, 'r') as f:
         secrets = json.load(f)
     return secrets 
 
