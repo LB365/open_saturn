@@ -59,6 +59,7 @@ def make_okta_app(config):
     okta_client = OktaClient(config)
 
     @app.before_request
+    @oidc.require_login
     def before_request():
         if oidc.user_loggedin:
             g.user = okta_client.get_user(oidc.user_getfield("sub"))
