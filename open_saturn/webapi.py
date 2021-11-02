@@ -1,4 +1,5 @@
 import os
+import json
 
 from flask import (
     Blueprint,
@@ -34,13 +35,23 @@ def make_open_app(config):
     app.register_blueprint(bp)
     return app
 
+def _generate_client_secrets(path):
+    secrets = generate_okta_secret()
+    with open(path, 'w') as f:
+        json.dump(secrets, f)
+
+def _load_client_secrets(path):
+    with open(path, 'w') as f:
+        secrets = json.load(f)
+    return secrets 
 
 def make_okta_app(config):
+    path = 'client_secrets.json'
     app = make_open_app(config)
     org = os.environ['OKTA_CLIENT_ORGURL']
     token = os.environ['OKTA_CLIENT_TOKEN']
-    secrets = generate_okta_secret()
-    app.config["OIDC_CLIENT_SECRETS"] = secrets
+    _generate_client_secrets(path)
+    app.config["OIDC_CLIENT_SECRETS"] = _load_client_secrets(path)
     app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
     app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
     app.config["SECRET_KEY"] = f"{os.environ['RANDOM_SECRET_KEY']}"
