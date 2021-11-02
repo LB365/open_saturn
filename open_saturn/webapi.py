@@ -58,8 +58,11 @@ def make_okta_app(config):
     config = {'orgUrl': org, 'token': token}
     okta_client = OktaClient(config)
 
+    @app.before_first_request
+    def before_first_request():
+        return oidc.require_login()
+
     @app.before_request
-    @oidc.require_login
     def before_request():
         if oidc.user_loggedin:
             g.user = okta_client.get_user(oidc.user_getfield("sub"))
