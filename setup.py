@@ -16,7 +16,7 @@ def hgsr_repo(repo_name, version):
 
 _REQUIREMENTS = [
     'flask<2.0',
-    'flask-oidc @ https://github.com/puiterwijk/flask-oidc.git@master',
+    'flask-oidc @ https://github.com/puiterwijk/flask-oidc/tarball/master#egg=flask-oidc',
     'okta',
     'pandas<1.2',
     'mock',
