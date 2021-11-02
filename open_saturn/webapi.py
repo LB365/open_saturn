@@ -4,6 +4,8 @@ import json
 from flask import (
     Blueprint,
     render_template,
+    url_for,
+    redirect,
     g
 )
 
@@ -59,8 +61,9 @@ def make_okta_app(config):
     okta_client = OktaClient(config)
 
     @app.before_first_request
-    def before_first_request():
-        return oidc.require_login(app.route('/'))
+    @oidc.require_login
+    def login():
+        return redirect(url_for("/"))
 
     @app.before_request
     def before_request():
