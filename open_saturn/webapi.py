@@ -51,7 +51,7 @@ def make_okta_app(config):
     app.config["OIDC_CLIENT_SECRETS"] = path
     app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
     app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
-    app.config["SECRET_KEY"] = f"{os.environ['RANDOM_SECRET_KEY']}"
+    app.secret_key = os.environ['RANDOM_SECRET_KEY']
     from flask_oidc import OpenIDConnect
     oidc = OpenIDConnect(app)
     from okta.client import Client as OktaClient
