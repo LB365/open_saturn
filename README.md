@@ -29,3 +29,4 @@ RANDOM_SECRET_KEY=<a-random-key>
 HOMEPAGE = <my-app.com>
 ```
 
+The `HOMEPAGE/oidc/callback` must be provided in the okta interface 

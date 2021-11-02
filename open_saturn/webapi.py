@@ -60,7 +60,7 @@ def make_okta_app(config):
 
     @app.before_first_request
     def before_first_request():
-        return oidc.require_login()
+        return oidc.require_login(app.route('/'))
 
     @app.before_request
     def before_request():
