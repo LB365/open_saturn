@@ -71,9 +71,12 @@ def make_okta_app(config):
     @app.before_request
     def before_request():
         if oidc.user_loggedin:
-            g.user = okta_client.get_user(oidc.user_getfield("sub"))
+            user = okta_client.get_user(oidc.user_getfield("sub"))
+            print(user)
+            g.user = user
         else:
             g.user = None
+            print("redirect")
             redirect(url_for("login"))
 
     return app

@@ -19,15 +19,15 @@ def generate_okta_secret():
     OKTA_ORG_URL_ISSUER = os.environ['OKTA_OAUTH2_ISSUER']
     HOMEPAGE = os.environ['HOMEPAGE']
     return {
-        "web": {
-            "client_id": f"{OKTA_CLIENT_ID}",
-            "client_secret": f"{OKTA_CLIENT_SECRET}",
-            "auth_uri": f"{OKTA_ORG_URL_ISSUER}/v1/authorize",
-            "token_uri": f"{OKTA_ORG_URL_ISSUER}/v1/token",
-            "issuer": f"{OKTA_ORG_URL_ISSUER}",
-            "userinfo_uri": f"{OKTA_ORG_URL_ISSUER}/userinfo",
-            "redirect_uris": [
-                f"https://{HOMEPAGE}/authorization-code/callback"
+        'web': {
+            'client_id': f'{OKTA_CLIENT_ID}',
+            'client_secret': f'{OKTA_CLIENT_SECRET}',
+            'auth_uri': f'{OKTA_ORG_URL_ISSUER}/v1/authorize',
+            'token_uri': f'{OKTA_ORG_URL_ISSUER}/v1/token',
+            'issuer': f'{OKTA_ORG_URL_ISSUER}',
+            'userinfo_uri': f'{OKTA_ORG_URL_ISSUER}/userinfo',
+            'redirect_uris': [
+                f'https://{HOMEPAGE}/authorization-code/callback'
             ]
         }
     }
