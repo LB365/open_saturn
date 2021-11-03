@@ -1,15 +1,12 @@
 import os
 import json
 import logging
-import asyncio
 
 from flask import Blueprint, render_template, redirect, url_for, g
 from tshistory_refinery.webapi import make_app as refinery_app
 from tshistory_refinery import helper
 
 from open_saturn.helper import generate_okta_secret
-
-loop = asyncio.get_event_loop()
 
 bp = Blueprint(
     'open_saturn',
@@ -52,7 +49,7 @@ def make_okta_app(config):
     token = os.environ['OKTA_CLIENT_TOKEN']
     _generate_client_secrets(path)
     app.config["OIDC_CLIENT_SECRETS"] = path
-    app.config["OIDC_CALLBACK_ROUTE"] = "/authorization-code/callback"
+    app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
     app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
     app.secret_key = os.environ['RANDOM_SECRET_KEY']
     from flask_oidc import OpenIDConnect
@@ -69,7 +66,6 @@ def make_okta_app(config):
         Force the user to login, then redirect them to the dashboard.
         """
         url = url_for("open_saturn.index")
-        logging.warning(f'Redirecting to {url}')
         return redirect(url)
 
     @app.route("/logout")
@@ -90,7 +86,6 @@ def make_okta_app(config):
             g.user = user
         else:
             url = url_for("login")
-            logging.warning(f'Redirecting to {url}')
             redirect(url)
 
     app.register_blueprint(bp)
