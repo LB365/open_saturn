@@ -74,6 +74,7 @@ def make_okta_app(config):
         g.user = None
         if oidc.user_loggedin:
             user = okta_client.get_user(oidc.user_getfield("sub"))
+            logging.warning(user)
             g.user = user
         else:
             url = url_for("login")
