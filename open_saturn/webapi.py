@@ -1,14 +1,8 @@
 import os
 import json
+import logging
 
-from flask import (
-    Blueprint,
-    render_template,
-    redirect,
-    url_for,
-    g
-)
-
+from flask import Blueprint, render_template, redirect, url_for, g
 from tshistory_refinery.webapi import make_app as refinery_app
 from tshistory_refinery import helper
 
@@ -24,10 +18,11 @@ def make_open_app(config):
         __name__,
         template_folder='templates',
         static_folder='static',
+        url_prefix="/"
     )
 
     @bp.route('/')
-    def welcome():
+    def index():
 
         return render_template(
             'summary.html',
@@ -66,17 +61,19 @@ def make_okta_app(config):
         """
         Force the user to login, then redirect them to the dashboard.
         """
-        return redirect(url_for("/"))
+        url = url_for("index")
+        logging.warning(f'Redirecting to {url}')
+        return redirect(url)
 
     @app.before_request
     def before_request():
+        g.user = None
         if oidc.user_loggedin:
             user = okta_client.get_user(oidc.user_getfield("sub"))
-            print(user)
             g.user = user
         else:
-            g.user = None
-            print("redirect")
-            redirect(url_for("login"))
+            url = url_for("login")
+            logging.warning(f'Redirecting to {url}')
+            redirect(url)
 
     return app
