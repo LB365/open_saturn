@@ -74,6 +74,6 @@ def make_okta_app(config):
             g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
             g.user = None
-            redirect(url_for("/login"))
+            redirect(url_for("login"))
 
     return app
