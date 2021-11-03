@@ -57,9 +57,9 @@ def make_okta_app(config):
     app.secret_key = os.environ['RANDOM_SECRET_KEY']
     from flask_oidc import OpenIDConnect
     oidc = OpenIDConnect(app)
-    from okta.client import Client as OktaClient
+    from okta import UserClient as OktaClient
     config = {'orgUrl': org, 'token': token}
-    okta_client = OktaClient(config)
+    okta_client = OktaClient(org, token)
     logging.warning(f'credentials: {config}')
 
     @app.route("/login")
@@ -76,7 +76,7 @@ def make_okta_app(config):
     def before_request():
         g.user = None
         if oidc.user_loggedin:
-            user = loop.run_until_complete(okta_client.get_user(oidc.user_getfield("sub")))
+            user = okta_client.get_user(oidc.user_getfield("sub"))
             g.user = user
         else:
             url = url_for("login")
