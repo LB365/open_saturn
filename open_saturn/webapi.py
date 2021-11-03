@@ -4,8 +4,6 @@ import json
 from flask import (
     Blueprint,
     render_template,
-    url_for,
-    redirect,
     g
 )
 
@@ -51,9 +49,8 @@ def make_okta_app(config):
     token = os.environ['OKTA_CLIENT_TOKEN']
     _generate_client_secrets(path)
     app.config["OIDC_CLIENT_SECRETS"] = path
-    app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
+    app.config["OIDC_CALLBACK_ROUTE"] = "/authorization-code/callback"
     app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
-    app.config["OIDC_ID_TOKEN_COOKIE_NAME"] = "oidc_token"
     app.secret_key = os.environ['RANDOM_SECRET_KEY']
     from flask_oidc import OpenIDConnect
     oidc = OpenIDConnect(app)
@@ -61,20 +58,12 @@ def make_okta_app(config):
     config = {'orgUrl': org, 'token': token}
     okta_client = OktaClient(config)
 
-    def _before_request():
+    @app.before_request
+    @oidc.require_login
+    def before_request():
         if oidc.user_loggedin:
             g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
             g.user = None
 
-    @app.before_first_request
-    @oidc.require_login
-    def login():
-        _before_request()
-        return redirect(url_for("/"))
-
-
-    app.before_request(_before_request)
-
-    
     return app

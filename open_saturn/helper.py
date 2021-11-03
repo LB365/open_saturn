@@ -27,7 +27,7 @@ def generate_okta_secret():
             "issuer": f"{OKTA_ORG_URL_ISSUER}",
             "userinfo_uri": f"{OKTA_ORG_URL_ISSUER}/userinfo",
             "redirect_uris": [
-                f"https://{HOMEPAGE}/oidc/callback"
+                f"https://{HOMEPAGE}/authorization-code/callback"
             ]
         }
     }
