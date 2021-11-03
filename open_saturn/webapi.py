@@ -8,27 +8,30 @@ from tshistory_refinery import helper
 
 from open_saturn.helper import generate_okta_secret
 
+bp = Blueprint(
+    'open_saturn',
+    __name__,
+    template_folder='templates',
+    static_folder='static',
+    url_prefix="/"
+)
 
-def make_open_app(config):
-    tsa = helper.apimaker(config)
-    app = refinery_app(config, tsa)
+@bp.route('/')
+def index():
 
-    bp = Blueprint(
-        'open_saturn',
-        __name__,
-        template_folder='templates',
-        static_folder='static',
-        url_prefix="/"
+    return render_template(
+        'summary.html',
+        has_write_permission=True
     )
 
-    @bp.route('/')
-    def index():
+def init_app(config):
+    tsa = helper.apimaker(config)
+    app = refinery_app(config, tsa)
+    return app
 
-        return render_template(
-            'summary.html',
-            has_write_permission=True
-        )
 
+def make_open_app(config):
+    app = init_app(config)
     app.register_blueprint(bp)
     return app
 
@@ -41,7 +44,7 @@ def _generate_client_secrets(path):
 
 def make_okta_app(config):
     path = 'client_secrets.json'
-    app = make_open_app(config)
+    app = init_app(config)
     org = os.environ['OKTA_CLIENT_ORGURL']
     token = os.environ['OKTA_CLIENT_TOKEN']
     _generate_client_secrets(path)
@@ -54,6 +57,7 @@ def make_okta_app(config):
     from okta.client import Client as OktaClient
     config = {'orgUrl': org, 'token': token}
     okta_client = OktaClient(config)
+    logging.warning(f'credentials: {config}')
 
     @app.route("/login")
     @oidc.require_login
@@ -76,4 +80,5 @@ def make_okta_app(config):
             logging.warning(f'Redirecting to {url}')
             redirect(url)
 
+    app.register_blueprint(bp)
     return app
