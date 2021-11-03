@@ -65,7 +65,7 @@ def make_okta_app(config):
         """
         Force the user to login, then redirect them to the dashboard.
         """
-        url = url_for("index")
+        url = url_for("open_saturn.index")
         logging.warning(f'Redirecting to {url}')
         return redirect(url)
 
