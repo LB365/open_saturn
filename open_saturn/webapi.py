@@ -1,12 +1,15 @@
 import os
 import json
 import logging
+import asyncio
 
 from flask import Blueprint, render_template, redirect, url_for, g
 from tshistory_refinery.webapi import make_app as refinery_app
 from tshistory_refinery import helper
 
 from open_saturn.helper import generate_okta_secret
+
+loop = asyncio.get_event_loop()
 
 bp = Blueprint(
     'open_saturn',
@@ -70,10 +73,10 @@ def make_okta_app(config):
         return redirect(url)
 
     @app.before_request
-    async def before_request():
+    def before_request():
         g.user = None
         if oidc.user_loggedin:
-            user = await okta_client.get_user(oidc.user_getfield("sub"))
+            user = loop.run_until_complete(okta_client.get_user(oidc.user_getfield("sub")))
             g.user = user
         else:
             url = url_for("login")
