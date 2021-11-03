@@ -57,7 +57,7 @@ def make_okta_app(config):
     app.secret_key = os.environ['RANDOM_SECRET_KEY']
     from flask_oidc import OpenIDConnect
     oidc = OpenIDConnect(app)
-    from okta import UserClient as OktaClient
+    from okta import UsersClient as OktaClient
     config = {'orgUrl': org, 'token': token}
     okta_client = OktaClient(org, token)
     logging.warning(f'credentials: {config}')
