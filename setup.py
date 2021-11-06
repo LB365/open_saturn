@@ -6,6 +6,7 @@ versions = {
     'tshistory_rest': '0.10.0',
     'tshistory_refinery': '0.2.0',
     'tshistory_xl': '0.2.1',
+    'tshistory_formula': '0.9.0',
 }
 
 
