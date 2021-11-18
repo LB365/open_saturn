@@ -49,7 +49,6 @@ def make_okta_app(config):
     token = os.environ['OKTA_CLIENT_TOKEN']
     _generate_client_secrets(path)
     app.config["OIDC_CLIENT_SECRETS"] = path
-    app.config["OIDC_COOKIE_SECURE"] = False
     app.config["OIDC_ID_TOKEN_COOKIE_NAME"] = "oidc_token"
     app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
     app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
@@ -61,14 +60,15 @@ def make_okta_app(config):
     app.register_blueprint(bp)
     views = app.view_functions
     open_views = [
-        'tshistory_rest',   # Rest API
-        'xlapi',            # Excel API
-        '_oidc_callback',   # Callbacks
-        'logout',           # Logout
-        'open_saturn.index' # Landing page
+        'tshistory_rest',  # Rest API
+        'xlapi',  # Excel API
+        '_oidc_callback',  # Callbacks
+        'static'
     ]
-    secure_views = {k: v for k, v in views.items() if
-                    not any(e in k for e in open_views)}
+    secure_views = [
+        k for k in views.keys()
+        if not any(e in k for e in open_views)
+    ]
 
     @app.route("/logout")
     def logout():
@@ -85,13 +85,16 @@ def make_okta_app(config):
             has_write_permission=True
         )
 
-    @app.before_request
-    def before_request():
-        endpoint = request.endpoint
-        if endpoint in secure_views:
-            if oidc.user_loggedin:
-                g.user = okta_client.get_user(oidc.user_getfield("sub"))
-            else:
+    @app.before_first_request
+    def before_first_request():
+        end = request.endpoint
+        static = end.startswith('static/')
+        if not static:
+            if end in secure_views:
                 g.user = None
+                if oidc.user_loggedin:
+                    g.user = okta_client.get_user(oidc.user_getfield("sub"))
+                else:
+                    return redirect(url_for('open_saturn.index'))
 
     return app
