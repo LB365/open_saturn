@@ -89,9 +89,7 @@ def make_okta_app(config):
         endpoint = request.endpoint
         if endpoint in secure_views:
             if oidc.user_loggedin:
-                user = okta_client.get_user(oidc.user_getfield("sub"))
-                print(user)
-                g.user = user
+                g.user = okta_client.get_user(oidc.user_getfield("sub"))
             else:
                 return redirect(url_for('open_saturn.index'))
 
