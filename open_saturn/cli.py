@@ -16,24 +16,6 @@ from open_saturn.helper import config, vacuum
 def saturn():
     pass
 
-
-@saturn.command('template-config-file')
-@click.option('--path', default='refinery.ini')
-def replace_uri(path):
-    config = ConfigParser()
-    config.read(path)
-    if 'DATABASE_URL' in os.environ.keys() is not None:
-        prefix = 'postgres'
-        url = os.environ['DATABASE_URL'].replace(prefix, prefix + 'ql')
-        os.environ['REWORKCFGPATH'] = url
-        logging.warning(msg=f'The database URL is {url}')
-        if not config.get('db', 'uri').startswith('postgresql'):
-            config.set('db', 'uri', url)
-            logging.warning(config.get('db', 'uri'))
-    with open(path, 'w') as configfile:
-        config.write(configfile)
-
-
 @saturn.command()
 def openwebstart():
     app.run(debug=True)
