@@ -9,4 +9,4 @@ app_type = {
 }
 
 app = app_type[os.environ['APP_TYPE']](config())
-app.wsgi_app = ReverseProxied(app.wsgi_app)
+#app.wsgi_app = ReverseProxied(app.wsgi_app)

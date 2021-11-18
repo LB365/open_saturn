@@ -48,6 +48,7 @@ def make_okta_app(config):
     token = os.environ['OKTA_CLIENT_TOKEN']
     _generate_client_secrets(path)
     app.config["OIDC_CLIENT_SECRETS"] = path
+    app.config["OIDC_COOKIE_SECURE"] = False
     app.config["OIDC_ID_TOKEN_COOKIE_NAME"] = "oidc_token"
     app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
     app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
@@ -56,6 +57,7 @@ def make_okta_app(config):
     oidc = OpenIDConnect(app)
     from okta import UsersClient as OktaClient
     okta_client = OktaClient(org, token)
+    app.register_blueprint(bp)
 
     @app.route("/logout")
     def logout():
@@ -66,7 +68,6 @@ def make_okta_app(config):
         return redirect(url_for("open_saturn.index"))
 
     @app.route("/")
-    @oidc.require_login
     def index():
         return render_template(
         'summary.html',
@@ -78,7 +79,6 @@ def make_okta_app(config):
         if oidc.user_loggedin:
             g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
-            g.user = None
+            oidc.require_login()
 
-    app.register_blueprint(bp)
     return app
