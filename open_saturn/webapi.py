@@ -92,6 +92,6 @@ def make_okta_app(config):
             if oidc.user_loggedin:
                 g.user = okta_client.get_user(oidc.user_getfield("sub"))
             else:
-                return redirect(url_for('open_saturn.index'))
+                g.user = None
 
     return app

@@ -1,3 +1,2 @@
 PROPER="${DATABASE_URL//postgres/postgresql}"
-rework vacuum $PROPER --workers
-rework monitor $PROPER --maxworkers 6
+rework monitor $PROPER --maxruns 1 --maxworkers 1 --minworkers 0
