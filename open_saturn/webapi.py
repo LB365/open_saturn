@@ -65,7 +65,6 @@ def make_okta_app(config):
         'xlapi',            # Excel API
         '_oidc_callback',   # Callbacks
         'logout'            # Logout
-        'static',
     ]
     secure_views = {k: v for k, v in views.items() if
                     not any(e in k for e in open_views)}
@@ -90,8 +89,10 @@ def make_okta_app(config):
         endpoint = request.endpoint
         if endpoint in secure_views:
             if oidc.user_loggedin:
-                g.user = okta_client.get_user(oidc.user_getfield("sub"))
+                user = okta_client.get_user(oidc.user_getfield("sub"))
+                print(user)
+                g.user = user
             else:
-                redirect(url_for('open_saturn.index'))
+                return redirect(url_for('open_saturn.index'))
 
     return app
