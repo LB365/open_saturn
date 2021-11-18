@@ -87,11 +87,10 @@ def make_okta_app(config):
     @app.before_request
     def before_request():
         endpoint = request.endpoint
-        print(f'endpoint:{endpoint}, secure_views: {secure_views}')
         if endpoint in secure_views:
             if oidc.user_loggedin:
                 g.user = okta_client.get_user(oidc.user_getfield("sub"))
             else:
-                oidc.require_login(secure_views[endpoint])
+                oidc.require_login(request(url_for(request.endpoint, **request.args)))
 
     return app
