@@ -48,24 +48,14 @@ def make_okta_app(config):
     token = os.environ['OKTA_CLIENT_TOKEN']
     _generate_client_secrets(path)
     app.config["OIDC_CLIENT_SECRETS"] = path
+    app.config["OIDC_ID_TOKEN_COOKIE_NAME"] = "oidc_token"
     app.config["OIDC_CALLBACK_ROUTE"] = "/oidc/callback"
     app.config["OIDC_SCOPES"] = ["openid", "email", "profile"]
     app.secret_key = os.environ['RANDOM_SECRET_KEY']
     from flask_oidc import OpenIDConnect
     oidc = OpenIDConnect(app)
     from okta import UsersClient as OktaClient
-    config = {'orgUrl': org, 'token': token}
     okta_client = OktaClient(org, token)
-    logging.warning(f'credentials: {config}')
-
-    @app.route("/login")
-    @oidc.require_login
-    def login():
-        """
-        Force the user to login, then redirect them to the dashboard.
-        """
-        url = url_for("open_saturn.index")
-        return redirect(url)
 
     @app.route("/logout")
     def logout():
@@ -73,19 +63,22 @@ def make_okta_app(config):
         Force the user to login, then redirect them to the dashboard.
         """
         oidc.logout()
-        url = url_for("open_saturn.index")
-        logging.warning(f'Redirecting to {url}')
-        return redirect(url)
+        return redirect(url_for("open_saturn.index"))
+
+    @app.route("/")
+    @oidc.require_login
+    def index():
+        return render_template(
+        'summary.html',
+        has_write_permission=True
+    )
 
     @app.before_request
     def before_request():
-        g.user = None
         if oidc.user_loggedin:
-            user = okta_client.get_user(oidc.user_getfield("sub"))
-            g.user = user
+            g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
-            url = url_for("login")
-            redirect(url)
+            g.user = None
 
     app.register_blueprint(bp)
     return app
