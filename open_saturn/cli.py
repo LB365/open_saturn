@@ -8,6 +8,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 from rework import api
 
+from open_saturn.wsgi import app
 from open_saturn.helper import config, vacuum
 
 
@@ -35,7 +36,6 @@ def replace_uri(path):
 
 @saturn.command()
 def openwebstart():
-    from open_saturn.wsgi import app
     app.run(debug=True)
 
 
