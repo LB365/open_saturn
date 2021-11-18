@@ -87,10 +87,6 @@ def make_okta_app(config):
         '_oidc_callback',
         'login'
     ]
-    secure_views = [
-        k for k in app.view_functions.keys()
-        if not any(e in k for e in open_views)
-    ]
 
     @app.before_request
     def before_request():
