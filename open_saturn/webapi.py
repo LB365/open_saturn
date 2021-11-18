@@ -61,10 +61,11 @@ def make_okta_app(config):
     app.register_blueprint(bp)
     views = app.view_functions
     open_views = [
-        'tshistory_rest',
-        'xlapi',
-        '_oidc_callback',
-        'logout'
+        'tshistory_rest',   # Rest API
+        'xlapi',            # Excel API
+        '_oidc_callback',   # Callbacks
+        'logout'            # Logout
+        'static',
     ]
     secure_views = {k: v for k, v in views.items() if
                     not any(e in k for e in open_views)}
@@ -86,10 +87,11 @@ def make_okta_app(config):
     @app.before_request
     def before_request():
         endpoint = request.endpoint
+        print(f'endpoint:{endpoint}, secure_views: {secure_views}')
         if endpoint in secure_views:
             if oidc.user_loggedin:
                 g.user = okta_client.get_user(oidc.user_getfield("sub"))
             else:
-                oidc.require_login(url_for(endpoint))
+                oidc.require_login(secure_views[endpoint])
 
     return app
