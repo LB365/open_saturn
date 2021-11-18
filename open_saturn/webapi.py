@@ -79,6 +79,6 @@ def make_okta_app(config):
         if oidc.user_loggedin:
             g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
-            oidc.require_login()
+            oidc.require_login(index)
 
     return app
