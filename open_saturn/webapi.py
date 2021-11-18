@@ -2,7 +2,7 @@ import os
 import json
 import logging
 
-from flask import Blueprint, render_template, redirect, url_for, g
+from flask import Blueprint, render_template, redirect, url_for, g, request
 from tshistory_refinery.webapi import make_app as refinery_app
 from tshistory_refinery import helper
 
@@ -15,13 +15,14 @@ bp = Blueprint(
     static_folder='static',
 )
 
+
 @bp.route('/')
 def index():
-
     return render_template(
         'summary.html',
         has_write_permission=True
     )
+
 
 def init_app(config):
     tsa = helper.apimaker(config)
@@ -58,27 +59,37 @@ def make_okta_app(config):
     from okta import UsersClient as OktaClient
     okta_client = OktaClient(org, token)
     app.register_blueprint(bp)
+    views = app.view_functions
+    open_views = [
+        'tshistory_rest',
+        'xlapi',
+        '_oidc_callback',
+        'logout'
+    ]
+    secure_views = {k: v for k, v in views.items() if
+                    not any(e in k for e in open_views)}
 
     @app.route("/logout")
     def logout():
         """
         Force the user to login, then redirect them to the dashboard.
         """
-        oidc.logout()
-        return redirect(url_for("open_saturn.index"))
+        return oidc.logout()
 
     @app.route("/")
     def index():
         return render_template(
-        'summary.html',
-        has_write_permission=True
-    )
+            'summary.html',
+            has_write_permission=True
+        )
 
     @app.before_request
     def before_request():
-        if oidc.user_loggedin:
-            g.user = okta_client.get_user(oidc.user_getfield("sub"))
-        else:
-            oidc.require_login(index)
+        endpoint = request.endpoint
+        if endpoint in secure_views:
+            if oidc.user_loggedin:
+                g.user = okta_client.get_user(oidc.user_getfield("sub"))
+            else:
+                oidc.require_login(url_for(endpoint))
 
     return app
