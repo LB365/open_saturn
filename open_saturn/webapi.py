@@ -78,6 +78,7 @@ def make_okta_app(config):
         return oidc.logout()
 
     @app.route("/")
+    @oidc.require_login
     def index():
         return render_template(
             'summary.html',
@@ -91,6 +92,6 @@ def make_okta_app(config):
             if oidc.user_loggedin:
                 g.user = okta_client.get_user(oidc.user_getfield("sub"))
             else:
-                oidc.require_login(request(url_for(request.endpoint, **request.args)))
+                redirect(url_for('open_saturn.index'))
 
     return app
