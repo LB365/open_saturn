@@ -64,7 +64,8 @@ def make_okta_app(config):
         'tshistory_rest',   # Rest API
         'xlapi',            # Excel API
         '_oidc_callback',   # Callbacks
-        'logout'            # Logout
+        'logout',           # Logout
+        'open_saturn.index' # Landing page
     ]
     secure_views = {k: v for k, v in views.items() if
                     not any(e in k for e in open_views)}
