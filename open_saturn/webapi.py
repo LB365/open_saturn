@@ -58,17 +58,14 @@ def make_okta_app(config):
     from okta import UsersClient as OktaClient
     okta_client = OktaClient(org, token)
     app.register_blueprint(bp)
-    views = app.view_functions
-    open_views = [
-        'tshistory_rest',  # Rest API
-        'xlapi',  # Excel API
-        '_oidc_callback',  # Callbacks
-        'static'
-    ]
-    secure_views = [
-        k for k in views.keys()
-        if not any(e in k for e in open_views)
-    ]
+
+    @app.route("/login")
+    @oidc.require_login
+    def login():
+        """
+        Force the user to login, then redirect them to the dashboard.
+        """
+        return "Logged"
 
     @app.route("/logout")
     def logout():
@@ -78,23 +75,30 @@ def make_okta_app(config):
         return oidc.logout()
 
     @app.route("/")
-    @oidc.require_login
     def index():
         return render_template(
             'summary.html',
             has_write_permission=True
         )
 
-    @app.before_first_request
-    def before_first_request():
-        end = request.endpoint
-        static = end.startswith('static/')
-        if not static:
-            if end in secure_views:
-                g.user = None
-                if oidc.user_loggedin:
-                    g.user = okta_client.get_user(oidc.user_getfield("sub"))
-                else:
-                    return redirect(url_for('open_saturn.index'))
+    open_views = [
+        'tshistory_rest',
+        'xlapi',
+        '_oidc_callback',
+        'login'
+    ]
+    secure_views = [
+        k for k in app.view_functions.keys()
+        if not any(e in k for e in open_views)
+    ]
+
+    @app.before_request
+    def before_request():
+        g.user = None
+        if oidc.user_loggedin:
+            g.user = okta_client.get_user(oidc.user_getfield("sub"))
+        else:
+            if request.endpoint not in open_views:
+                return redirect(url_for('login'))
 
     return app
