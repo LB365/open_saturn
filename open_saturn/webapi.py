@@ -65,7 +65,7 @@ def make_okta_app(config):
         """
         Force the user to login, then redirect them to the dashboard.
         """
-        return "Logged"
+        return redirect(url_for("open_saturn.index"))
 
     @app.route("/logout")
     def logout():
@@ -73,13 +73,6 @@ def make_okta_app(config):
         Force the user to login, then redirect them to the dashboard.
         """
         return oidc.logout()
-
-    @app.route("/")
-    def index():
-        return render_template(
-            'summary.html',
-            has_write_permission=True
-        )
 
     open_views = [
         'tshistory_rest',
