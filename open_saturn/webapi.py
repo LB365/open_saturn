@@ -84,11 +84,8 @@ def make_okta_app(config):
 
     @app.before_request
     def before_request():
-        if oidc.user_loggedin:
-            if not hasattr(g, 'user'):
-                user = okta_client.get_user(oidc.user_getfield("sub"))
-                print(user.__dict__)
-                g.user = user
+        if oidc.user_loggedin and g.user is None:
+            g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
             g.user = None
             if request.endpoint in app.view_functions:
