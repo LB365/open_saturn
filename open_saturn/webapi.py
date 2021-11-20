@@ -94,7 +94,7 @@ def make_okta_app(config):
     @app.before_request
     def before_request():
         if oidc.user_loggedin:
-            print(f'{g.user=}')
+            return
         else:
             if request.endpoint in app.view_functions:
                 open_endpoint = [request.endpoint in x for x in open_views]
