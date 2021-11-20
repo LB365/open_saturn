@@ -87,7 +87,8 @@ def make_okta_app(config):
         if oidc.user_loggedin:
             g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
-            if any([request.endpoint in x for x in open_views]):
-                return redirect(url_for('login'))
+            if request.endpoint in app.view_functions:
+                if any([request.endpoint in x for x in open_views]):
+                    return redirect(url_for('login'))
 
     return app
