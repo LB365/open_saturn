@@ -89,7 +89,8 @@ def make_okta_app(config):
         else:
             g.user = None
             if request.endpoint in app.view_functions:
-                if not any([request.endpoint not in x for x in open_views]):
+                open_endpoint = [request.endpoint in x for x in open_views]
+                if not any(open_endpoint):
                     return redirect(url_for('login'))
 
     return app
