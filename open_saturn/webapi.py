@@ -79,12 +79,13 @@ def make_okta_app(config):
         'xlapi',
         '_oidc_callback',
         'login',
+
     ]
 
     @app.before_request
     def before_request():
         if oidc.user_loggedin:
-            if g.user is None:
+            if not hasattr(g, 'user'):
                 g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
             g.user = None
