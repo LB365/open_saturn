@@ -11,7 +11,7 @@ def kill_workers():
     engine = create_engine(config()['db']['uri'])
     with engine.begin() as cn:
         update('rework.worker').values(
-            kill=True
+            kill=True, running=False, shutdown=True
         ).do(cn)
 
 
