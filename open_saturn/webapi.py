@@ -73,7 +73,8 @@ def make_okta_app(config):
         """
         Force the user to login, then redirect them to the dashboard.
         """
-        return oidc.logout()
+        oidc.logout()
+        return "Logged out"
 
     open_views = [
         'tshistory_rest',
