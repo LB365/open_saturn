@@ -78,17 +78,18 @@ def make_okta_app(config):
         'tshistory_rest',
         'xlapi',
         '_oidc_callback',
-        'login'
+        'login',
     ]
 
     @app.before_request
     def before_request():
-        g.user = None
         if oidc.user_loggedin:
-            g.user = okta_client.get_user(oidc.user_getfield("sub"))
+            if g.user is None:
+                g.user = okta_client.get_user(oidc.user_getfield("sub"))
         else:
+            g.user = None
             if request.endpoint in app.view_functions:
-                if any([request.endpoint in x for x in open_views]):
+                if not any([request.endpoint not in x for x in open_views]):
                     return redirect(url_for('login'))
 
     return app
