@@ -1,5 +1,5 @@
 import os
-from pm_utils.flaskutil import ReverseProxied
+from tshistory_refinery.wsgi import ReverseProxied
 from open_saturn.helper import config
 from open_saturn.webapi import make_okta_app, make_open_app
 
