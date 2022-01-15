@@ -1,4 +1,4 @@
 PROPER="${DATABASE_URL//postgres/postgresql}"
 python ./scripts/kill-workers.py
 rework vacuum $PROPER --workers
-rework monitor $PROPER --maxworkers 6
+rework monitor $PROPER --maxworkers 2
