@@ -34,9 +34,8 @@ REQUIREMENTS = _REQUIREMENTS + SATURN_REQUIREMENTS
 setup(
     name='open_saturn',
     version='1.0',
-    packages=['pm_utils', 'open_saturn'],
+    packages=['open_saturn'],
     package_dir={
-        'pm_utils': 'pm_utils',
         'open_saturn': 'open_saturn'
     },
     package_data={'open_saturn': [
