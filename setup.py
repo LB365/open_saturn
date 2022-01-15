@@ -7,6 +7,7 @@ versions = {
     'tshistory_refinery': '0.3.0',
     'tshistory_xl': '0.3.0',
     'tshistory_formula': '0.10.0',
+    'rework': '0.14.0',
 }
 
 
