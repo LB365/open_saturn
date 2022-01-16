@@ -65,7 +65,6 @@ def make_okta_app(config):
         """
         Force the user to login, then redirect them to the dashboard.
         """
-        g.user = okta_client.get_user(oidc.user_getfield("sub"))
         return redirect(url_for("open_saturn.index"))
 
     @app.route("/logout")
