@@ -1,30 +1,11 @@
-from typing import Union, Optional, Dict, Tuple
-from datetime import datetime, timedelta
-from numbers import Number
-import inspect
+from datetime import datetime
 
 import pandas as pd
 import numpy as np
-import holidays
-import pycountry
-import pytz
-from requests import HTTPError
 
-from psyl import lisp
-from tshistory.util import (
-    compatible_date,
-    empty_series,
-    patch
-)
 from tshistory_formula.registry import (
     func,
-    finder,
-    history,
-    insertion_dates,
-    metadata,
-    history
 )
-from tshistory_formula import helper, interpreter
 
 def _time_arrow(
         values: np.ndarray,
