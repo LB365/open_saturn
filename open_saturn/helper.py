@@ -1,7 +1,6 @@
 import socket
 import os
 from datetime import datetime, timedelta
-from nbformat import read
 from sqlalchemy import create_engine
 import configparser
 
