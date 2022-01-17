@@ -1,28 +1,11 @@
 import os
 import json
-import logging
 
-from flask import Blueprint, render_template, redirect, url_for, g, request
+from flask import redirect, url_for, g, request
 from tshistory_refinery.webapi import make_app as refinery_app
 from tshistory_refinery import helper
 
 from open_saturn.helper import generate_okta_secret
-
-bp = Blueprint(
-    'open_saturn',
-    __name__,
-    template_folder='templates',
-    static_folder='static',
-)
-
-
-@bp.route('/')
-def index():
-    return render_template(
-        'summary.html',
-        has_write_permission=True
-    )
-
 
 def init_app(config):
     tsa = helper.apimaker(config)
@@ -32,7 +15,6 @@ def init_app(config):
 
 def make_open_app(config):
     app = init_app(config)
-    app.register_blueprint(bp)
     return app
 
 
@@ -57,8 +39,7 @@ def make_okta_app(config):
     oidc = OpenIDConnect(app)
     from okta import UsersClient as OktaClient
     okta_client = OktaClient(org, token)
-    app.register_blueprint(bp)
-
+    
     @app.route("/login")
     @oidc.require_login
     def login():

@@ -1,4 +1,3 @@
-import socket
 import os
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine

@@ -1,7 +1,4 @@
 import click
-import logging
-import os
-from configparser import ConfigParser
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 from apscheduler.schedulers.blocking import BlockingScheduler
