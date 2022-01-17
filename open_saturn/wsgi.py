@@ -9,8 +9,6 @@ types = {
 }
 
 conf = config()
-print(conf)
 app_type = os.environ['APP_TYPE']
 app = types[app_type](conf)
-app.wsgi_app = ReverseProxied(app.wsgi_app)
 app.wsgi_app = ReverseProxied(app.wsgi_app)

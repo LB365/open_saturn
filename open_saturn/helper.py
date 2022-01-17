@@ -2,15 +2,19 @@ import socket
 import os
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine
+import configparser
 
 from inireader import reader
 
 
 def config():
-    config = reader('refinery.ini')
+    config = configparser.ConfigParser()
+    config.read('refinery.ini')
     if 'DATABASE_URL' in os.environ.keys() is not None:
         url_env = os.environ['DATABASE_URL'].replace('postgres', 'postgresql')
         config['db']['uri'] = url_env
+    with open('refinery.ini', 'w') as configfile:
+        config.write(configfile)
     return config
 
 def generate_okta_secret():
