@@ -1,7 +1,7 @@
 from setuptools import setup
 
 versions = {
-    'tshistory': '0.14.0',
+    # 'tshistory': '0.14.0',
     'tshistory_editor': '0.8.2',
     'tshistory_rest': '0.10.0',
     'tshistory_refinery': '0.3.0',
@@ -17,6 +17,7 @@ def hgsr_repo(repo_name, version):
 
 
 _REQUIREMENTS = [
+    'tshistory==0.14.1',
     'flask<2.0',
     'flask-oidc>=1.4.0',
     'okta==0.0.4',
