@@ -24,7 +24,7 @@ _REQUIREMENTS = [
     'tshistory_editor',
     'tshistory_xl',
     'tshistory_rest',
-    'tshistory_formula'
+    'tshistory_formula',
     'flask<2.0',
     'flask-oidc>=1.4.0',
     'okta==0.0.4',
