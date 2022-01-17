@@ -24,14 +24,7 @@ def index():
     )
 
 
-def init_app(config):
-    tsa = helper.apimaker(config)
-    app = refinery_app(config, tsa)
-    return app
-
-
-def make_open_app(config):
-    app = init_app(config)
+def make_open_app(app):
     app.register_blueprint(bp)
     return app
 
@@ -42,9 +35,8 @@ def _generate_client_secrets(path):
         json.dump(secrets, f)
 
 
-def make_okta_app(config):
+def make_okta_app(app):
     path = 'client_secrets.json'
-    app = init_app(config)
     org = os.environ['OKTA_CLIENT_ORGURL']
     token = os.environ['OKTA_CLIENT_TOKEN']
     _generate_client_secrets(path)

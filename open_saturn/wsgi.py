@@ -1,5 +1,6 @@
 import os
-from open_saturn.helper import config
+from tshistory_refinery.wsgi import app
+
 from open_saturn.webapi import make_okta_app, make_open_app
 
 types = {
@@ -7,8 +8,5 @@ types = {
     'prd': make_okta_app,
 }
 
-conf = config()
 app_type = os.environ['APP_TYPE']
-app = types[app_type](conf)
-from tshistory_refinery.wsgi import ReverseProxied
-app.wsgi_app = ReverseProxied(app.wsgi_app)
+app = types[app_type](app)
