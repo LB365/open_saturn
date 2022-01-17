@@ -14,7 +14,7 @@ def config():
         config['db']['uri'] = url_env
     with open('refinery.ini', 'w') as configfile:
         config.write(configfile)
-    print(reader('refinery.ini'))
+    print(reader('refinery.ini').__dict__())
     return config
 
 def generate_okta_secret():
