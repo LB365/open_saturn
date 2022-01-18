@@ -1,13 +1,14 @@
 from setuptools import setup
 
 versions = {
-    'tshistory': '0.14.0',
-    'tshistory_editor': '0.8.2',
-    'tshistory_rest': '0.10.0',
-    'tshistory_refinery': '0.3.0',
-    'tshistory_xl': '0.3.0',
-    'tshistory_formula': '0.10.0',
-    'rework': '0.14.0',
+    # 'tshistory': '0.14.0',
+    # 'tshistory_editor': '0.8.2',
+    # 'tshistory_rest': '0.10.0',
+    # 'tshistory_refinery': '0.3.0',
+    # 'tshistory_xl': '0.3.0',
+    # 'tshistory_formula': '0.10.0',
+    # 'rework': '0.14.0',
+    'tsview': '0.13.0',
 }
 
 
@@ -18,7 +19,6 @@ def hgsr_repo(repo_name, version):
 
 _REQUIREMENTS = [
     'tshistory',
-    'tsview',
     'rework',
     'tshistory_refinery',
     'tshistory_editor',
@@ -38,7 +38,7 @@ _REQUIREMENTS = [
 
 SATURN_REQUIREMENTS = [hgsr_repo(k, v) for k, v in versions.items()]
 
-REQUIREMENTS = _REQUIREMENTS #+ SATURN_REQUIREMENTS
+REQUIREMENTS = _REQUIREMENTS + SATURN_REQUIREMENTS
 
 setup(
     name='open_saturn',
