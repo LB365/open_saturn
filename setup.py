@@ -12,6 +12,7 @@ versions = {
 }
 
 
+
 def hgsr_repo(repo_name, version):
     return f'{repo_name} @ https://hg.sr.ht/~pythonian/' \
            f'{repo_name}/archive/{version}.tar.gz#egg={repo_name}'
@@ -20,6 +21,7 @@ def hgsr_repo(repo_name, version):
 _REQUIREMENTS = [
     'tshistory',
     'rework',
+    'tsview @ git+https://github.com/lofriedman/tsview.git@master#egg=tsview'
     'tshistory_refinery',
     'tshistory_editor',
     'tshistory_xl',
