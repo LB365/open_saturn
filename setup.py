@@ -19,7 +19,7 @@ def hgsr_repo(repo_name, version):
 
 
 _REQUIREMENTS = [
-    'tsview==0.13.1',
+    'tsview',
     'tshistory',
     'rework',
     'tshistory_refinery',
