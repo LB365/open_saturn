@@ -8,6 +8,5 @@ types = {
 }
 app_type = os.environ['APP_TYPE']
 config_ = config()
-print(config_.__dict__)
 from tshistory_refinery.wsgi import app
 app = types[app_type](app)
