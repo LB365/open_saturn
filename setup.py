@@ -21,7 +21,7 @@ def hgsr_repo(repo_name, version):
 _REQUIREMENTS = [
     'tshistory',
     'rework',
-    'tsview @ git+https://github.com/lofriedman/tsview.git@master#egg=tsview',
+    'tsview @ https://github.com/lofriedman/tsview/archive/0.13.1.tar.gz#egg=tsview',
     'tshistory_refinery',
     'tshistory_editor',
     'tshistory_xl',
