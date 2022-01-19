@@ -3,8 +3,12 @@ from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 import configparser
 
+from inireader import reader
+
+
 def config():
     config = configparser.ConfigParser()
+    config.read('refinery.ini')
     if 'DATABASE_URL' in os.environ.keys() is not None:
         url_env = os.environ['DATABASE_URL'].replace('postgres', 'postgresql')
         config['db']['uri'] = url_env
