@@ -1,24 +1,6 @@
 from setuptools import setup
 
-versions = {
-    # 'tshistory': '0.14.0',
-    # 'tshistory_editor': '0.8.2',
-    # 'tshistory_rest': '0.10.0',
-    # 'tshistory_refinery': '0.3.0',
-    # 'tshistory_xl': '0.3.0',
-    # 'tshistory_formula': '0.10.0',
-    # 'rework': '0.14.0',
-    # 'tsview': '0.13.0',
-}
-
-
-
-def hgsr_repo(repo_name, version):
-    return f'{repo_name} @ https://hg.sr.ht/~pythonian/' \
-           f'{repo_name}/archive/{version}.tar.gz#egg={repo_name}'
-
-
-_REQUIREMENTS = [
+REQUIREMENTS = [
     'tsview',
     'tshistory',
     'rework',
@@ -37,10 +19,6 @@ _REQUIREMENTS = [
     'gunicorn',
     'psycopg2-binary',
 ]
-
-SATURN_REQUIREMENTS = [hgsr_repo(k, v) for k, v in versions.items()]
-
-REQUIREMENTS = _REQUIREMENTS + SATURN_REQUIREMENTS
 
 setup(
     name='open_saturn',

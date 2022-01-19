@@ -1,10 +1,6 @@
 import os
 import json
-import logging
-
 from flask import Blueprint, render_template, redirect, url_for, g, request
-from tshistory_refinery.webapi import make_app as refinery_app
-from tshistory_refinery import helper
 
 from open_saturn.helper import generate_okta_secret
 

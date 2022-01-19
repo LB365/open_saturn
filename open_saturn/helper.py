@@ -3,9 +3,6 @@ from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 import configparser
 
-from inireader import reader
-
-
 def config():
     config = configparser.ConfigParser()
     config.read('refinery.ini')

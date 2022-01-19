@@ -3,9 +3,7 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 
-from tshistory_formula.registry import (
-    func,
-)
+from tshistory_formula.registry import func
 
 def _time_arrow(
         values: np.ndarray,
