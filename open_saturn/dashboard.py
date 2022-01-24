@@ -45,7 +45,7 @@ def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
     charts = dw.get_charts(search=title)
     args = data, PLOTS, title, None
     if not charts:
-        create_single_plot(*args)
+        create_single_plot(*args[1:])
     return update_single_plot(*args)
     
 
