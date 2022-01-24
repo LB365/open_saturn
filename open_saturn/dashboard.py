@@ -9,7 +9,7 @@ from inireader import reader
 from tshistory.api import timeseries
 
 from open_saturn.helper import generate_okta_secret
-from dw_squared.client import PlotConfig, create_single_plot, update_single_plot
+from dw_squared.client import PlotConfig, create_single_plot, update_single_plot, get_data
 
 PLOTS = PlotConfig('plots.yaml')
 REFINERY = reader('refinery.ini')
