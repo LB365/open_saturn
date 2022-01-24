@@ -3,7 +3,7 @@ from setuptools import setup
 REQUIREMENTS = [
     'dw_squared @ git+https://github.com/lofriedman/dw-squared.git@master',
     'tsview',
-    'tshistory==0.14.0',
+    'tshistory==0.14.1',
     'rework',
     'tshistory_refinery',
     'tshistory_editor',
