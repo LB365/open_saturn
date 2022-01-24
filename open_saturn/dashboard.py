@@ -27,7 +27,7 @@ bp = Blueprint(
 @bp.route('/dashboard')
 def index():
     return render_template(
-        'summary.html',
+        'dashboard.html',
         has_write_permission=True
     )
 
