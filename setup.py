@@ -1,6 +1,7 @@
 from setuptools import setup
 
 REQUIREMENTS = [
+    'datawrapper @ git+https://github.com/lofriedman/Datawrapper@master'
     'dw_squared @ git+https://github.com/lofriedman/dw-squared.git@master',
     'tsview',
     'tshistory',

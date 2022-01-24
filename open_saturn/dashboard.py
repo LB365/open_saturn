@@ -39,7 +39,6 @@ def index():
 def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
     dw = Datawrapper()
     print(f"{dw._access_token=}")
-    print(dw.account_info())
     program = PLOTS.series_bounds([title])
     data = get_data(TSA, program)
     data = saturn_to_frame(data, plots, title)
