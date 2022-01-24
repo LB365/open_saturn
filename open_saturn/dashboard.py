@@ -38,12 +38,15 @@ def index():
 
 def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
     dw = Datawrapper()
+    print(f"{dw._access_token=}")
     program = PLOTS.series_bounds([title])
     data = get_data(TSA, program)
     data = saturn_to_frame(data, plots, title)
     charts = dw.get_charts(search=title)
     args = data, PLOTS, title, None
-    return create_single_plot(*args) if not charts else update_single_plot(*args)
+    if not charts:
+        create_single_plot(*args)
+    return update_single_plot(*args)
     
 
 @bp.route('/single_graph/<graph_title>')
