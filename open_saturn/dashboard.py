@@ -38,6 +38,7 @@ def index():
     )
 
 def _single_graph(tsa:timeseries, title:str, token:str, plots:PlotConfig):
+    print(token)
     dw = Datawrapper(token)
     program = PLOTS.series_bounds([title])
     data = get_data(TSA, program)
