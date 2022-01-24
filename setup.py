@@ -1,7 +1,7 @@
 from setuptools import setup
 
 REQUIREMENTS = [
-    'datawrapper @ git+https://github.com/lofriedman/Datawrapper@master',
+    'datawrapper @ git+https://github.com/lofriedman/Datawrapper.git@master',
     'dw_squared @ git+https://github.com/lofriedman/dw-squared.git@master',
     'tsview',
     'tshistory',
@@ -14,7 +14,6 @@ REQUIREMENTS = [
     'flask<2.0',
     'flask-oidc>=1.4.0',
     'okta==0.0.4',
-    'pandas<1.2',
     'mock',
     'inireader',
     'apscheduler',
