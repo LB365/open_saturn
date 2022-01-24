@@ -4,7 +4,7 @@ REQUIREMENTS = [
     'datawrapper @ git+https://github.com/lofriedman/Datawrapper.git@master',
     'dw_squared @ git+https://github.com/lofriedman/dw-squared.git@master',
     'tsview',
-    'tshistory',
+    'tshistory==0.14.0',
     'rework',
     'tshistory_refinery',
     'tshistory_editor',
