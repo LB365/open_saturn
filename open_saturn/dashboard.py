@@ -15,7 +15,6 @@ PLOTS = PlotConfig('plots.yaml')
 REFINERY = reader('refinery.ini')
 TSA = timeseries(REFINERY['db']['uri'])
 TOKEN = os.environ['DW_TOKEN']
-DW = Datawrapper(TOKEN)
 
 bp = Blueprint(
     'dashboard',
@@ -32,18 +31,17 @@ def index():
         has_write_permission=True
     )
 
-def _single_graph(graph_title):
-    program = PLOTS.series_bounds([graph_title])
+def _single_graph(tsa:timeseries, title:str, token:str, plots:PlotConfig):
+    dw = Datawrapper(token)
+    program = PLOTS.series_bounds([title])
     data = get_data(TSA, program)
-    data = saturn_to_frame(data, PLOTS, graph_title)
-    charts = DW.get_charts(search=graph_title)
-    if not charts:
-        create_single_plot(data, PLOTS, graph_title, TOKEN)
-    else:
-        update_single_plot(data, PLOTS, graph_title, TOKEN)
-    return DW.get_iframe_code(graph_title)
+    data = saturn_to_frame(data, plots, title)
+    charts = dw.get_charts(search=title)
+    args = data, PLOTS, title, token
+    create_single_plot(*args) if not charts else update_single_plot(*args)
+    return dw.get_iframe_code(title)
     
 
 @bp.route('single_graph/<graph_title>')
 def single_graph(graph_title):
-    return _single_graph(graph_title)
+    return _single_graph(TSA, graph_title, TOKEN, PLOTS)
