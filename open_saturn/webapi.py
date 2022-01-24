@@ -3,6 +3,7 @@ import json
 from flask import Blueprint, render_template, redirect, url_for, g, request
 
 from open_saturn.helper import generate_okta_secret
+from open_saturn.dashboard import bp as dashboard
 
 bp = Blueprint(
     'open_saturn',
@@ -22,6 +23,7 @@ def index():
 
 def make_open_app(app):
     app.register_blueprint(bp)
+    app.register_blueprint(dashboard)
     return app
 
 
@@ -46,6 +48,7 @@ def make_okta_app(app):
     from okta import UsersClient as OktaClient
     okta_client = OktaClient(org, token)
     app.register_blueprint(bp)
+    app.register_blueprint(dashboard)
 
     @app.route("/login")
     @oidc.require_login
