@@ -39,7 +39,9 @@ def _single_graph(tsa:timeseries, title:str, token:str, plots:PlotConfig):
     charts = dw.get_charts(search=title)
     args = data, PLOTS, title, token
     create_single_plot(*args) if not charts else update_single_plot(*args)
-    return dw.get_iframe_code(title)
+    chart = dw.get_iframe_code(title)
+    print(chart) 
+    return chart
     
 
 @bp.route('/single_graph/<graph_title>')
