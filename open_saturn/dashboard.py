@@ -42,11 +42,9 @@ def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
     program = PLOTS.series_bounds([title])
     data = get_data(TSA, program)
     data = saturn_to_frame(data, plots, title)
+    args = data, PLOTS, title, dw._access_token
     charts = dw.get_charts(search=title)
-    args = data, PLOTS, title, None
-    if not charts:
-        create_single_plot(data=None, config=PLOTS, title=title, token=None)
-    return update_single_plot(*args)
+    return create_single_plot(*args) if not charts else update_single_plot(*args)
     
 
 @bp.route('/single_graph/<graph_title>')
