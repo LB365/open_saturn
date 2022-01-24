@@ -14,7 +14,7 @@ REQUIREMENTS = [
     'flask<2.0',
     'flask-oidc>=1.4.0',
     'okta==0.0.4',
-    'pandas',
+    'pandas=1.3.0',
     'mock',
     'inireader',
     'apscheduler',
