@@ -20,7 +20,6 @@ from dw_squared.client import (
 PLOTS = PlotConfig('plots.yaml')
 REFINERY = reader('refinery.ini')
 TSA = timeseries(REFINERY['db']['uri'])
-TOKEN = os.environ['DW_TOKEN']
 
 bp = Blueprint(
     'dashboard',
@@ -37,20 +36,16 @@ def index():
         has_write_permission=True
     )
 
-def _single_graph(tsa:timeseries, title:str, token:str, plots:PlotConfig):
-    print(token)
-    dw = Datawrapper(token)
+def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
+    dw = Datawrapper()
     program = PLOTS.series_bounds([title])
     data = get_data(TSA, program)
     data = saturn_to_frame(data, plots, title)
     charts = dw.get_charts(search=title)
-    args = data, PLOTS, title, token
-    create_single_plot(*args) if not charts else update_single_plot(*args)
-    chart = dw.get_iframe_code(title)
-    print(chart) 
-    return chart
+    args = data, PLOTS, title, None
+    return create_single_plot(*args) if not charts else update_single_plot(*args)
     
 
 @bp.route('/single_graph/<graph_title>')
 def single_graph(graph_title):
-    return _single_graph(TSA, graph_title, TOKEN, PLOTS)
+    return _single_graph(TSA, graph_title, PLOTS)
