@@ -41,6 +41,7 @@ def _single_graph(graph_title):
         create_single_plot(data, PLOTS, graph_title, TOKEN)
     else:
         update_single_plot(data, PLOTS, graph_title, TOKEN)
+    return DW.get_iframe_code(graph_title)
     
 
 @bp.route('single_graph/<graph_title>')
