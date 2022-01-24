@@ -11,6 +11,12 @@
     - 
       series_id: "kiwi_price"
       legend: "kiwi price"
+      start: null
+      end: null
+      revision: null
     - 
       series_id: "fries_price"
       legend: "fries price"
+      start: null
+      end: null
+      revision: null
