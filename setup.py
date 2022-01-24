@@ -1,7 +1,7 @@
 from setuptools import setup
 
 REQUIREMENTS = [
-    'dw_squared @ git+https://github.com/lofriedman/dw-squared.git#egg=dw_squared',
+    'dw_squared @ git+https://github.com/lofriedman/dw-squared.git@master',
     'tsview',
     'tshistory',
     'rework',
