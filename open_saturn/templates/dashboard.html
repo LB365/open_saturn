@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-
+    <script type="text/javascript" src="http://datawrapper.dwcdn.net/lib/embed.min.js"></script>
 </head>
 <body>
-    {{url_for('dashboard.single_graph', graph_title="kiwi_price") | safe}}
+    <div>
+        <div>
+        {{url_for('dashboard.single_graph', graph_title="kiwi_price")}}
+        </div>
+        <div>
+        {{url_for('dashboard.single_graph', graph_title="kiwi_price") | safe }}
+        </div>
+    </div>
 </body>
 </html>
