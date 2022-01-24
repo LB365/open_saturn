@@ -42,6 +42,6 @@ def _single_graph(tsa:timeseries, title:str, token:str, plots:PlotConfig):
     return dw.get_iframe_code(title)
     
 
-@bp.route('single_graph/<graph_title>')
+@bp.route('/single_graph/<graph_title>')
 def single_graph(graph_title):
     return _single_graph(TSA, graph_title, TOKEN, PLOTS)
