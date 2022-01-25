@@ -44,7 +44,10 @@ def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
     data = saturn_to_frame(data, plots, title)
     args = data, PLOTS, title, dw._access_token
     charts = dw.get_charts(search=title)
-    return create_single_plot(*args) if not charts else update_single_plot(*args)
+    if not charts:
+        create_single_plot(*args)
+    update_single_plot(*args)
+    return dw.get_iframe_code(title) 
     
 
 @bp.route('/single_graph/<graph_title>')
