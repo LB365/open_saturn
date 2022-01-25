@@ -10,10 +10,10 @@ from tshistory.api import timeseries
 
 from open_saturn.helper import generate_okta_secret
 from dw_squared.client import (
-    PlotConfig, 
-    create_single_plot, 
-    update_single_plot, 
-    get_data, 
+    PlotConfig,
+    create_single_plot,
+    update_single_plot,
+    get_data,
     saturn_to_frame
 )
 
@@ -47,10 +47,10 @@ def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
     if not charts:
         create_single_plot(*args)
     update_single_plot(*args)
-    return dw.get_iframe_code(title) 
+    return dw.get_iframe_code(title)
 
 @bp.route('/debug_single_graph/<graph_title>')
-def single_graph(graph_title):
+def debug_single_graph(graph_title):
     graph = _single_graph(TSA, graph_title, PLOTS)
     return render_template('single_graph.html', graph=graph)
 
