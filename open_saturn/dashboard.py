@@ -48,7 +48,11 @@ def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
         create_single_plot(*args)
     update_single_plot(*args)
     return dw.get_iframe_code(title) 
-    
+
+@bp.route('/debug_single_graph/<graph_title>')
+def single_graph(graph_title):
+    graph = _single_graph(TSA, graph_title, PLOTS)
+    return render_template('single_graph.html', graph=graph)
 
 @bp.route('/single_graph/<graph_title>')
 def single_graph(graph_title):
