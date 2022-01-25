@@ -1,6 +1,6 @@
-- 
+-
   chart_type : "line"
-  title: "kiwi_price" 
+  title: "kiwi_price"
   source: "source"
   notes: "notes"
   height: 400
@@ -8,15 +8,61 @@
   prefix_unit: "usd_bbl"
   display_today: false
   series:
-    - 
+    -
       series_id: "kiwi_price"
       legend: "kiwi price"
       start: null
       end: null
       revision: null
-    - 
+    -
       series_id: "fries_price"
       legend: "fries price"
       start: null
       end: null
+      revision: null
+
+-
+  chart_type : "line"
+  title: "banana_price"
+  source: "source"
+  notes: "notes"
+  height: 400
+  width: 600
+  prefix_unit: "usd_bbl"
+  display_today: false
+  series:
+    -
+      series_id: "banana_price"
+      legend: "banana price"
+      start: null
+      end: null
+      revision: null
+
+-
+  chart_type : "stacked"
+  title: "banana_price_bar3"
+  source: "source"
+  notes: "notes"
+  height: 400
+  width: 1200
+  prefix_unit: "usd_bbl"
+  display_today: false
+  series:
+    -
+      series_id: "banana_price"
+      legend: "banana price"
+      start: (date "2020-1-1")
+      end: (date "2020-1-7")
+      revision: null
+    -
+      series_id: "kiwi_price"
+      legend: "kiwi price"
+      start: (date "2020-1-1")
+      end: (date "2020-1-7")
+      revision: null
+    -
+      series_id: "potato_price"
+      legend: "potato price"
+      start: (date "2020-1-1")
+      end: (date "2020-1-7")
       revision: null

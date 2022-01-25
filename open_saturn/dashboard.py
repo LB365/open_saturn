@@ -1,5 +1,6 @@
 import os
 import json
+from time import time
 
 from flask import Blueprint, render_template, redirect, url_for, g, request
 
@@ -20,6 +21,8 @@ from dw_squared.client import (
 PLOTS = PlotConfig('plots.yaml')
 REFINERY = reader('refinery.ini')
 TSA = timeseries(REFINERY['db']['uri'])
+DW = Datawrapper()
+
 
 bp = Blueprint(
     'dashboard',
@@ -37,17 +40,16 @@ def index():
     )
 
 def _single_graph(tsa:timeseries, title:str, plots:PlotConfig):
-    dw = Datawrapper()
-    print(f"{dw._access_token=}")
+    charts = {x['title']: x['id'] for x in DW.get_charts()}
     program = PLOTS.series_bounds([title])
     data = get_data(TSA, program)
     data = saturn_to_frame(data, plots, title)
-    args = data, PLOTS, title, dw._access_token
-    charts = dw.get_charts(search=title)
-    if not charts:
-        create_single_plot(*args)
-    update_single_plot(*args)
-    return dw.get_iframe_code(title)
+    args = data, PLOTS, title, DW._access_token
+    if title not in charts:
+        plot = create_single_plot(*args)
+    else:
+        plot = update_single_plot(*args)
+    return plot.data
 
 @bp.route('/debug_single_graph/<graph_title>')
 def debug_single_graph(graph_title):
