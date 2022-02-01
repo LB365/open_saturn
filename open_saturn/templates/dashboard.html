@@ -8,10 +8,7 @@
 <body>
     <div>
         <div>
-        {{url_for('dashboard.single_graph', graph_title="kiwi_price")}}
-        </div>
-        <div>
-        {{url_for('dashboard.single_graph', graph_title="kiwi_price") | safe }}
+        <script src={{url_for('dashboard.single_graph', graph_title="kiwi_price") | safe }}></script>
         </div>
     </div>
 </body>
